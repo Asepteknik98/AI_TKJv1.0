@@ -1,17 +1,16 @@
 <?php
-<?php
 require_once __DIR__ . '/../lib/Database.php';
-use App\\Lib\\Database;
+use App\Lib\Database;
 $pdo = Database::getConnection();
 
 // simple counts (use safe queries; tables may not exist yet)
 try {
-    $guru = $pdo->query('SELECT COUNT(*) as c FROM guru')->fetch()['c'] ?? 0;
-    $siswa = $pdo->query('SELECT COUNT(*) as c FROM siswa')->fetch()['c'] ?? 0;
-    $materi = $pdo->query('SELECT COUNT(*) as c FROM materi')->fetch()['c'] ?? 0;
-    $chat_ai = $pdo->query('SELECT COUNT(*) as c FROM chat_ai')->fetch()['c'] ?? 0;
-} catch (\\Exception $e) {
-    $guru = $siswa = $materi = $chat_ai = 0;
+  $guru = $pdo->query('SELECT COUNT(*) as c FROM guru')->fetch()['c'] ?? 0;
+  $siswa = $pdo->query('SELECT COUNT(*) as c FROM siswa')->fetch()['c'] ?? 0;
+  $materi = $pdo->query('SELECT COUNT(*) as c FROM materi')->fetch()['c'] ?? 0;
+  $chat_ai = $pdo->query('SELECT COUNT(*) as c FROM chat_ai')->fetch()['c'] ?? 0;
+} catch (\Exception $e) {
+  $guru = $siswa = $materi = $chat_ai = 0;
 }
 ?>
 <!doctype html>
