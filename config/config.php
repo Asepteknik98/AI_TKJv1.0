@@ -7,13 +7,13 @@ class Config {
     public static $db_user = 'root';
     public static $db_pass = '';
 
-    // Set your OpenAI API key here or export OPENAI_API_KEY in your environment.
-    public static $openai_api_key = getenv('OPENAI_API_KEY') ?: 'YOUR_OPENAI_API_KEY';
+    // Set your OpenAI API key here if you don't use env variable.
+    public static $openai_api_key = 'YOUR_OPENAI_API_KEY';
 
     public static function getOpenAIKey()
     {
         $key = getenv('OPENAI_API_KEY');
-        if ($key) {
+        if ($key !== false && $key !== '') {
             return $key;
         }
         if (self::$openai_api_key && self::$openai_api_key !== 'YOUR_OPENAI_API_KEY') {
