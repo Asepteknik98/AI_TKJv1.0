@@ -9,17 +9,16 @@ function view($name) {
     include __DIR__ . '/views/' . $name . '.php';
 }
 
-// Basic public home / login
-if ($page === 'home') {
-    view('home');
+// Default to dashboard (no login required)
+if ($page === 'home' || $page === 'dashboard') {
+    view('dashboard');
     exit;
 }
 
-// Other routes would require login
-require_login();
-
-if ($page === 'dashboard') {
-    view('dashboard');
+// For other pages, attempt to load the view if exists
+$path = __DIR__ . '/views/' . $page . '.php';
+if (file_exists($path)) {
+    view($page);
 } else {
     view('404');
 }
