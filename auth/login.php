@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . '/../lib/Database.php';
 require_once __DIR__ . '/auth.php';
-use App\\Lib\\Database;
+use App\Lib\Database;
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     header('Location: /AI_TKJ/index.php');
