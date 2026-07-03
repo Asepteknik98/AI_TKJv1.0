@@ -22,6 +22,11 @@
         </a>
       </li>
       <li class="nav-item">
+        <a class="nav-link" href="/AI_TKJ/index.php?p=ai_materi">
+          <i class="fa fa-lightbulb me-2"></i> AI Pembuat Materi
+        </a>
+      </li>
+      <li class="nav-item">
         <a class="nav-link" href="/AI_TKJ/index.php?p=riwayat">
           <i class="fa fa-history me-2"></i> Riwayat AI
         </a>
