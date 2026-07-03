@@ -4,11 +4,17 @@ namespace App\Lib;
 use App\Config\Config;
 
 class AI {
-    public static function chat($prompt)
+    public static function chat($prompt, $mode = 'auto')
     {
         $apiKey = Config::getOpenAIKey();
-        if (!$apiKey) {
-            return ['answer' => self::localFallback($prompt), 'raw' => ['source' => 'local_fallback']];
+        $useLocal = $mode === 'local' || ($mode !== 'openai' && !$apiKey);
+
+        if ($useLocal) {
+            return ['answer' => self::localFallback($prompt), 'raw' => ['source' => 'local_fallback'], 'mode' => 'local'];
+        }
+
+        if ($mode === 'openai' && !$apiKey) {
+            throw new \Exception('OpenAI API key tidak ditemukan. Setel kunci di config/config.php atau export environment variable OPENAI_API_KEY.');
         }
 
         $data = [
@@ -43,7 +49,7 @@ class AI {
         }
 
         $answer = $resData['choices'][0]['message']['content'] ?? '';
-        return ['answer' => $answer, 'raw' => $resData];
+        return ['answer' => $answer, 'raw' => $resData, 'mode' => 'openai'];
     }
 
     private static function localFallback(string $prompt): string

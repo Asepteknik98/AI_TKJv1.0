@@ -43,9 +43,9 @@ function ensure_default_user()
         }
     }
 
-    // Fallback default user
+    // Fallback default user if database cannot be reached
     $_SESSION['user'] = [
-        'id' => 0,
+        'id' => null,
         'name' => 'Administrator',
         'email' => 'admin@local',
         'role' => 'admin'

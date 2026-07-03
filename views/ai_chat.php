@@ -1,7 +1,9 @@
 <?php
 require_once __DIR__ . '/../auth/auth.php';
+require_once __DIR__ . '/../config/config.php';
 require_once __DIR__ . '/../lib/Database.php';
 require_once __DIR__ . '/../lib/AI.php';
+use App\Config\Config;
 use App\Lib\Database;
 use App\Lib\AI;
 
@@ -9,16 +11,21 @@ require_login();
 $user = current_user();
 $pdo = Database::getConnection();
 
+$openaiAvailable = (bool) Config::getOpenAIKey();
+$mode = $openaiAvailable ? 'openai' : 'local';
 $q = trim($_GET['q'] ?? '');
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $q = trim($_POST['question'] ?? '');
+    $mode = $_POST['ai_mode'] ?? $mode;
     if ($q !== '') {
         try {
-            $res = AI::chat($q);
+            $res = AI::chat($q, $mode);
+            $userId = isset($user['id']) && $user['id'] > 0 ? $user['id'] : null;
             $stmt = $pdo->prepare('INSERT INTO chat_ai (user_id, role_user, question, answer, raw_response) VALUES (?,?,?,?,?)');
-            $stmt->execute([$user['id'], $user['role'], $q, $res['answer'], json_encode($res['raw'])]);
+            $stmt->execute([$userId, $user['role'], $q, $res['answer'], json_encode($res['raw'])]);
             $saved = true;
             $answer = $res['answer'];
+            $usedMode = $res['mode'] ?? $mode;
         } catch (Exception $e) {
             $error = $e->getMessage();
         }
@@ -46,8 +53,17 @@ $chats = $history->fetchAll();
     <div class="mb-2">
       <input type="text" name="question" value="<?= htmlspecialchars($q) ?>" class="form-control" placeholder="Tanyakan sesuatu, mis: Apa itu IP Address?" required>
     </div>
-    <div>
-      <button class="btn btn-primary">Kirim</button>
+    <div class="row align-items-center mb-3">
+      <div class="col-md-6 mb-2 mb-md-0">
+        <label class="form-label">Mode AI</label>
+        <select name="ai_mode" class="form-select">
+          <option value="local" <?= ($mode === 'local' || ($usedMode ?? '') === 'local') ? 'selected' : '' ?>>AI Gratis (Local)</option>
+          <option value="openai" <?= ($mode === 'openai' || ($usedMode ?? '') === 'openai') ? 'selected' : '' ?> <?= $openaiAvailable ? '' : 'disabled' ?>>OpenAI API<?= $openaiAvailable ? '' : ' (Tidak tersedia)' ?></option>
+        </select>
+      </div>
+      <div class="col-md-6 text-md-end">
+        <button class="btn btn-primary">Kirim</button>
+      </div>
     </div>
   </form>
 
@@ -55,6 +71,7 @@ $chats = $history->fetchAll();
     <div class="card mb-3">
       <div class="card-body">
         <h6>Jawaban AI</h6>
+        <span class="badge bg-secondary mb-2"><?= htmlspecialchars(ucfirst($usedMode ?? $mode)) ?></span>
         <p><?= nl2br(htmlspecialchars($answer)) ?></p>
       </div>
     </div>
