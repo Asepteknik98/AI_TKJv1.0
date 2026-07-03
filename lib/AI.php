@@ -6,9 +6,9 @@ use App\Config\Config;
 class AI {
     public static function chat($prompt)
     {
-        $apiKey = Config::$openai_api_key;
+        $apiKey = Config::getOpenAIKey();
         if (!$apiKey) {
-            throw new \Exception('OpenAI API key not set in config');
+            throw new \Exception('OpenAI API key tidak ditemukan. Setel kunci di config/config.php atau export environment variable OPENAI_API_KEY.');
         }
 
         $data = [

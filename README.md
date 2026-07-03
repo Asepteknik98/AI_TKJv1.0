@@ -6,8 +6,9 @@ Setup:
 
 1. Put project in `C:/xampp/htdocs/AI_TKJ`.
 2. Create database and run `database/schema.sql` in MySQL.
-3. Edit `config/config.php` to set DB credentials and `openai_api_key`.
-4. Run `php database/seed_admin.php` to create initial admin user.
+3. Edit `config/config.php` to set DB credentials and your OpenAI API key, or export `OPENAI_API_KEY` in your environment.
+   - Replace `YOUR_OPENAI_API_KEY` with your real key from https://platform.openai.com/account/api-keys.
+4. Run `php database/seed_admin.php` to create the initial admin user.
 5. Open `http://localhost/AI_TKJ` in browser.
 
 Notes:

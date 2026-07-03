@@ -19,7 +19,7 @@
           </a>
           <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userMenu">
             <li><a class="dropdown-item" href="/AI_TKJ/index.php?p=profile">Lihat Profil</a></li>
-            <li><a class="dropdown-item" href="/AI_TKJ/views/change_password_form.php">Ubah Password</a></li>
+            <li><a class="dropdown-item" href="/AI_TKJ/index.php?p=change_password_form">Ubah Password</a></li>
             <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item text-danger" href="/AI_TKJ/auth/logout.php">Logout</a></li>
           </ul>

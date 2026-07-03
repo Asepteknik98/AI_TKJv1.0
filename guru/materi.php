@@ -132,6 +132,18 @@ $materis = $stmt->fetchAll();
     <?php endforeach; ?>
   </div>
 
+  <?php if ($total > $limit): ?>
+    <nav aria-label="Paginasi Materi">
+      <ul class="pagination justify-content-center mt-4">
+        <?php for ($page = 1; $page <= ceil($total / $limit); $page++): ?>
+          <li class="page-item <?= $page === $pageNum ? 'active' : '' ?>">
+            <a class="page-link" href="/AI_TKJ/index.php?p=materi&page=<?= $page ?>"><?= $page ?></a>
+          </li>
+        <?php endfor; ?>
+      </ul>
+    </nav>
+  <?php endif; ?>
+
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="/AI_TKJ/assets/js/app.js"></script>
