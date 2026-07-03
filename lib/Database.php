@@ -2,6 +2,9 @@
 namespace App\Lib;
 
 use PDO;
+
+// Ensure config is loaded when this class is used directly
+require_once __DIR__ . '/../config/config.php';
 use App\Config\Config;
 
 class Database {
