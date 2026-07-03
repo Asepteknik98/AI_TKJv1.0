@@ -12,6 +12,11 @@
         </a>
       </li>
       <li class="nav-item">
+        <a class="nav-link" href="/AI_TKJ/index.php?p=materi_manage">
+          <i class="fa fa-cog me-2"></i> Kelola Materi
+        </a>
+      </li>
+      <li class="nav-item">
         <a class="nav-link" href="/AI_TKJ/index.php?p=ai_chat">
           <i class="fa fa-robot me-2"></i> AI Chat
         </a>

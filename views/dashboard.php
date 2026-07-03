@@ -28,10 +28,19 @@ try {
   <div class="row">
     <?php include __DIR__ . '/partials/sidebar.php'; ?>
     <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 py-4">
-      <h2>Dashboard</h2>
+      <div class="d-flex justify-content-between flex-wrap align-items-center mb-4">
+        <div>
+          <h2 class="h3">Dashboard</h2>
+          <p class="text-muted">Ringkasan penggunaan AI dan materi untuk SMK Jaya Buana TKJ.</p>
+        </div>
+        <div>
+          <a class="btn btn-outline-primary me-2" href="/AI_TKJ/index.php?p=materi">Lihat Materi</a>
+          <a class="btn btn-primary" href="/AI_TKJ/index.php?p=materi_manage">Kelola Materi</a>
+        </div>
+      </div>
       <div class="row g-3">
         <div class="col-6 col-md-3">
-          <div class="card shadow-sm">
+          <div class="card shadow-sm p-3 bg-primary-soft">
             <div class="card-body">
               <h6 class="text-muted">Guru</h6>
               <h3 class="mb-0"><?= htmlspecialchars($guru) ?></h3>

@@ -9,6 +9,7 @@ require_login();
 $user = current_user();
 $pdo = Database::getConnection();
 
+$q = trim($_GET['q'] ?? '');
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $q = trim($_POST['question'] ?? '');
     if ($q !== '') {
@@ -43,7 +44,7 @@ $chats = $history->fetchAll();
   <h3>AI Chat</h3>
   <form method="post" class="mb-3">
     <div class="mb-2">
-      <input type="text" name="question" class="form-control" placeholder="Tanyakan sesuatu, mis: Apa itu IP Address?" required>
+      <input type="text" name="question" value="<?= htmlspecialchars($q) ?>" class="form-control" placeholder="Tanyakan sesuatu, mis: Apa itu IP Address?" required>
     </div>
     <div>
       <button class="btn btn-primary">Kirim</button>

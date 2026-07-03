@@ -28,6 +28,16 @@ function ensure_default_user()
                 $_SESSION['user'] = $u;
                 return;
             }
+            // if no admin exists, create default admin
+            $hash = password_hash('admin123', PASSWORD_DEFAULT);
+            $insert = $pdo->prepare('INSERT INTO users (name,email,password_hash,role) VALUES (?,?,?,"admin")');
+            $insert->execute(['Administrator','admin@smkjayabuana.local',$hash]);
+            $stmt = $pdo->query("SELECT id,name,email,role FROM users WHERE role='admin' LIMIT 1");
+            $u = $stmt->fetch();
+            if ($u) {
+                $_SESSION['user'] = $u;
+                return;
+            }
         } catch (Exception $e) {
             // ignore, fallback to guest
         }
